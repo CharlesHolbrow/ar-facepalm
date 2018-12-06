@@ -38,10 +38,14 @@ class ofApp : public ofBaseApp{
     // Caching the previous frame make it easy to get the delta
     uint64_t previousMicroseconds = 0;
     MouseEvent previousMouse;
-    
+    ofEasyCam cam;
+
     // Handle recording
     STATE state = PLAYING;
     
     Content content;
     Stepper stepper;
+
+    // These are for debugging camera issues
+    vector<ofNode> nodes;
 };

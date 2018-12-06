@@ -20,7 +20,7 @@
 // A Blip on the radar. Timing and position of a point in the gesture.
 struct Blip {
     // The x,y position of this blip
-    ofVec2f pos;
+    ofVec3f pos;
     // How long into the gesture was this created?
     double gestureTime;
     // Is this the last blip in a gesture?
@@ -29,7 +29,11 @@ struct Blip {
 
 struct MouseEvent {
     ofVec2f pos;
+    ofVec2f previousPos;
     ofVec2f vel;
+    ofVec3f worldPos;
+    ofVec3f worldVel;
+    ofVec3f previousWorldPos;
     bool isDown;
     bool press;
     bool release;
@@ -37,8 +41,6 @@ struct MouseEvent {
 
 class Gesture {
 private:
-    // Mouse position at the end of last frame
-    ofVec2f previousPos;
     // Playhead position, so consecutive play() calls know where to pick up from
     double playbackTime;
     // The last added blip

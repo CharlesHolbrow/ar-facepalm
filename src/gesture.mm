@@ -10,8 +10,7 @@
 void Gesture::reset() {
     totalBlips = -1; // "un-terminate" the gesture
     recordingTime = 0;
-    previousPos = ofVec2f(0, 0);
-    filter.fill(previousPos);
+    filter.fill(ofVec3f(0, 0, 0));
     blipsVec.clear();
 };
 
@@ -21,8 +20,7 @@ void Gesture::update(Stepper stepper, MouseEvent mouse) {
         return;
     };
     if (mouse.press) {
-        filter.fill(mouse.pos);
-        previousPos = mouse.pos;
+        filter.fill(mouse.worldPos);
     }
 
     // Note that the step at "stepZeroTime" has already been processed.
@@ -33,7 +31,7 @@ void Gesture::update(Stepper stepper, MouseEvent mouse) {
         double sinceTime = stepIndex * stepper.stepSize;
         recordingTime += stepper.stepSize;
 
-        ofVec2f input = previousPos + mouse.vel * sinceTime;
+        ofVec3f input = mouse.previousWorldPos + mouse.worldVel * sinceTime;
         filter.push(input);
 
         Blip b;
@@ -43,7 +41,6 @@ void Gesture::update(Stepper stepper, MouseEvent mouse) {
         blipsVec.push_back(b);
         stepIndex++;
     }
-    previousPos = mouse.pos;
 };
 
 int Gesture::size() {

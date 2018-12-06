@@ -12,8 +12,8 @@
 
 class Particle {
 public:
-    ofVec2f pos;
-    ofVec2f velocity;
+    ofVec3f pos;
+    ofVec3f velocity;
     double size;
 
     ofColor ofc = ofColor::white;
@@ -35,7 +35,7 @@ public:
 
     void render() {
         ofSetColor(color());
-        ofDrawCircle(pos.x, pos.y, size);
+        ofDrawCircle(pos.x, pos.y, pos.z, size);
     };
 };
 
@@ -62,7 +62,7 @@ public:
         double updateTime = 0;
         for (auto b : playhead.update(deltaTime)) {
             ofSetColor(127. + 127. * sin(b.gestureTime), 255, 255);
-            add(b.pos.x, b.pos.y, 30);
+            add(b.pos, 30);
             updateLast(playhead.playbackTime - b.gestureTime);
         }
     };
@@ -73,11 +73,10 @@ public:
     };
 
     // Add a single particle, and update with deltaTime. Calls ofGetStyle for color.
-    void add(float x, float y, float size) {
+    void add(ofVec3f pos, float size) {
         Particle p;
         p.size = size;
-        p.pos.x = x;
-        p.pos.y = y;
+        p.pos = pos;
 //        p.velocity.x = 100;
 //        p.velocity.y = 80;
         p.ofc = ofGetStyle().color;

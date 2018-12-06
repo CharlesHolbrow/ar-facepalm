@@ -2,15 +2,23 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetVerticalSync(true);
+//    ofEnableDepthTest();
     ofSetFrameRate(60);
     stepper.setStepSize(1. / 2000.);
     ofLog() << "Ticks per frame @ 60fps: " << 1. / 60. / stepper.getStepSize();
+    cam.disableMouseInput();
+    cam.setPosition(110, 110, 665);
+    cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     uint64_t microseconds = ofGetElapsedTimeMicros();
     uint64_t deltaMicroseconds = microseconds - previousMicroseconds;
+
+//    cam.setPosition(ofVec3f(150,100 + 100 * sin(ofGetElapsedTimef() * 0.5), 665));
+//    cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
     
     // What time did the frame start?
     double frameStart = static_cast<double>(previousMicroseconds * 0.000001);
@@ -28,8 +36,17 @@ void ofApp::update(){
     mouse.release = !down && previousMouse.isDown;
     mouse.isDown = down;
     mouse.pos = ofVec2f(ofGetMouseX(), ofGetMouseY());
+    mouse.previousPos = previousMouse.pos;
     mouse.vel = (mouse.pos - previousMouse.pos) / stepper.stepsDuration();
     
+    // calculate the world position of the mouse
+    ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
+    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 500;
+    mouse.worldPos = cam.getGlobalPosition() + ray;
+    mouse.previousWorldPos = previousMouse.worldPos;
+    mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
+
+    // tick our content
     content.update(stepper, mouse);
     
     previousMicroseconds = microseconds;
@@ -39,8 +56,27 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0, 0, 0);
-    
-    content.render();
+
+    // DEBUG: info about our camera
+    ofVec3f cPos = cam.getPosition();
+    char str [100];
+    std::sprintf(str, "Camera: %4.0f %4.0f %4.0f\tp:%4.0f y:%4.0f r:%4.0f",
+                 cPos.x, cPos.y, cPos.z,
+                 cam.getPitch(),
+                 cam.getHeading(),
+                 cam.getRoll());
+    ofSetColor(255, 0, 0);
+    ofDrawBitmapString(str, 2, 12);
+
+    cam.begin();
+        content.render();
+        // Debug Info
+        ofDrawAxis(100);
+        for (ofNode n : nodes) {
+            n.draw();
+        }
+    cam.end();
+
     if (state == RECORDING) {
         ofSetColor(155 + 100 * sin(ofGetElapsedTimef() * 4), 0, 0);
         ofDrawCircle(10, 10, 5);
@@ -72,6 +108,11 @@ void ofApp::keyPressed(int key){
         case OF_KEY_SHIFT:
             break;
         case OF_KEY_RIGHT_SHIFT:
+            break;
+        case 'c':
+        case 'C':
+            // todo: once we get position info working, we can be done
+            cam.getMouseInputEnabled() ? cam.disableMouseInput() : cam.enableMouseInput();
             break;
         default:
             if (state == PLAYING) {
