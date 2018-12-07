@@ -7,6 +7,7 @@
 #include "trail.h"
 #include "customJson.h"
 #include "content.h"
+#include "receiver.h"
 
 enum STATE {
     RECORDING,
@@ -45,6 +46,7 @@ class ofApp : public ofBaseApp{
     
     Content content;
     Stepper stepper;
+    Receiver receiver;
 
     // These are for debugging camera issues
     vector<ofNode> nodes;

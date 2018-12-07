@@ -8,6 +8,9 @@ void ofApp::setup(){
     stepper.setStepSize(1. / 2000.);
     ofLog() << "Ticks per frame @ 60fps: " << 1. / 60. / stepper.getStepSize();
 
+    // Threaded OSC Receive
+    receiver.startThread();
+
     // Setup the Camera
     cam.disableMouseInput();
     cam.setPosition(110, 110, 665);
@@ -20,9 +23,10 @@ void ofApp::update(){
     uint64_t microseconds = ofGetElapsedTimeMicros();
     uint64_t deltaMicroseconds = microseconds - previousMicroseconds;
 
-//    cam.setPosition(ofVec3f(150,100 + 100 * sin(ofGetElapsedTimef() * 0.5), 665));
-//    cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
-    
+    CameraOrientation cor = receiver.getState();
+    cam.setOrientation(cor.quat);
+    cam.setPosition(cor.pos * 600);
+
     // What time did the frame start?
     double frameStart = static_cast<double>(previousMicroseconds * 0.000001);
     // time in seconds

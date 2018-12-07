@@ -13,9 +13,7 @@
 
 struct CameraOrientation {
     ofVec3f pos = ofVec3f(1, 1, 1);
-    float roll = 1;
-    float yaw = 1;
-    float pitch = 1;
+    ofQuaternion quat;
 };
 
 class Receiver : public ofThread {
