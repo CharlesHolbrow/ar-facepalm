@@ -7,9 +7,12 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     stepper.setStepSize(1. / 2000.);
     ofLog() << "Ticks per frame @ 60fps: " << 1. / 60. / stepper.getStepSize();
+
+    // Setup the Camera
     cam.disableMouseInput();
     cam.setPosition(110, 110, 665);
     cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
+    cam.setFov(63);
 }
 
 //--------------------------------------------------------------
