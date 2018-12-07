@@ -16,6 +16,7 @@
 		5619533D21B8ADFB000192BE /* customJson.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5619533521B8ADFA000192BE /* customJson.mm */; };
 		5619533E21B8ADFB000192BE /* gesture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5619533821B8ADFB000192BE /* gesture.mm */; };
 		5619533F21B8ADFB000192BE /* gesturePlayhead.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5619533B21B8ADFB000192BE /* gesturePlayhead.mm */; };
+		5619534921BA3DE9000192BE /* receiver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5619534821BA3DE9000192BE /* receiver.mm */; };
 		5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */; };
 		62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */; };
 		640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
@@ -94,6 +95,8 @@
 		5619533B21B8ADFB000192BE /* gesturePlayhead.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = gesturePlayhead.mm; sourceTree = "<group>"; };
 		5619534021B8AF56000192BE /* ofJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofJson.h; sourceTree = "<group>"; };
 		5619534121B8AF56000192BE /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
+		5619534721BA3C75000192BE /* receiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = receiver.h; sourceTree = "<group>"; };
+		5619534821BA3DE9000192BE /* receiver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = receiver.mm; sourceTree = "<group>"; };
 		58414C1B03A4296118C189EB /* ofxDeckLinkOutput.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDeckLinkOutput.h; path = ../../../addons/ofxDeckLink/src/ofxDeckLinkOutput.h; sourceTree = SOURCE_ROOT; };
 		63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
@@ -331,6 +334,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				5619534721BA3C75000192BE /* receiver.h */,
+				5619534821BA3DE9000192BE /* receiver.mm */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -470,6 +475,7 @@
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
+				5619534921BA3DE9000192BE /* receiver.mm in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
