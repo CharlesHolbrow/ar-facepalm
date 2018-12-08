@@ -24,7 +24,7 @@ void Receiver::threadedFunction() {
                 auto v1 = ofVec3f(-1, 0, 0);
                 auto v2 = ofVec3f(0, 1, 0);
                 auto v3 = ofVec3f(0, 0, -1);
-                state.quat.makeRotate(ang.z + 90, v1, ang.y, v2, ang.x, v3);
+                state.quat.makeRotate(ang.z, v1, ang.y, v2, ang.x, v3);
 
 //                ofLog(OF_LOG_NOTICE, "(%5.3f, %5.3f, %5.3f)", state.pos.x, state.pos.y, state.pos.z);
                 unlock();

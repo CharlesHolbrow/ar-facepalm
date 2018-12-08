@@ -73,7 +73,7 @@ void ofApp::draw(){
 //    ofBackground(0, 0, 0);
     ofSetColor(255);
     ofClear(0);
-    videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
+//    videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
 
     // DEBUG: info about our camera
     ofVec3f cPos = cam.getPosition();
