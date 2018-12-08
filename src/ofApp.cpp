@@ -21,16 +21,13 @@ void ofApp::setup(){
     if (videoIn.setup(0)) {
         videoIn.start(bmdModeHD1080i5994);
     }
+    nodes.push_back(ofNode());
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     uint64_t microseconds = ofGetElapsedTimeMicros();
     uint64_t deltaMicroseconds = microseconds - previousMicroseconds;
-
-    CameraOrientation cor = receiver.getState();
-    cam.setOrientation(cor.quat);
-    cam.setPosition(cor.pos * 600);
 
     // What time did the frame start?
     double frameStart = static_cast<double>(previousMicroseconds * 0.000001);
@@ -42,6 +39,7 @@ void ofApp::update(){
     // Setup the Stepper for this frame
     stepper.advanceFrame(frameDelta);
     
+    // Process all input
     bool down = ofGetMousePressed();
     MouseEvent mouse;
     mouse.press = down && !previousMouse.isDown;
@@ -53,10 +51,15 @@ void ofApp::update(){
     
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
-    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 100;
+    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 400;
     mouse.worldPos = cam.getGlobalPosition() + ray;
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
+
+    // Get the position of the Tracker
+    CameraOrientation cor = receiver.getState();
+    nodes.back().setOrientation(cor.quat);
+    nodes.back().setPosition(cor.pos * 600);
 
     // tick our content
     content.update(stepper, mouse);
@@ -92,6 +95,15 @@ void ofApp::draw(){
         ofDrawAxis(100);
         for (ofNode n : nodes) {
             n.draw();
+            ofPushMatrix();
+            ofMultMatrix(n.getGlobalTransformMatrix());
+            ofSetColor(255, 0, 255);
+            ofDrawLine(0, 0, 0, 0, 0, -100);
+            ofNode n2;
+            n2.setPosition(0, 0, -100);
+            ofSetColor(120, 255, 120);
+            n2.draw();
+            ofPopMatrix();
         }
     cam.end();
 
