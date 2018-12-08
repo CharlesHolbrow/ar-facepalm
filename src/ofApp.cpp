@@ -58,8 +58,8 @@ void ofApp::update(){
 
     // Get the position of the Tracker
     CameraOrientation cor = receiver.getState();
-    nodes.back().setOrientation(cor.quat);
-    nodes.back().setPosition(cor.pos * 600);
+    cam.setOrientation(cor.quat);
+    cam.setPosition(cor.pos * 600);
 
     // tick our content
     content.update(stepper, mouse);
@@ -95,15 +95,6 @@ void ofApp::draw(){
         ofDrawAxis(100);
         for (ofNode n : nodes) {
             n.draw();
-            ofPushMatrix();
-            ofMultMatrix(n.getGlobalTransformMatrix());
-            ofSetColor(255, 0, 255);
-            ofDrawLine(0, 0, 0, 0, 0, -100);
-            ofNode n2;
-            n2.setPosition(0, 0, -100);
-            ofSetColor(120, 255, 120);
-            n2.draw();
-            ofPopMatrix();
         }
     cam.end();
 
