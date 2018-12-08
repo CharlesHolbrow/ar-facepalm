@@ -17,11 +17,13 @@ void Receiver::threadedFunction() {
                 z = m.getArgAsFloat(6);
                 ofQuaternion quat = ofQuaternion(x, y, z, w);
                 // Adust for the mout angle of the vive tracker on the camera
-                static const ofQuaternion rot = ofQuaternion(90, ofVec3f(1, 0, 0));
+                static const ofQuaternion r1 = ofQuaternion(90, ofVec3f(1, 0, 0));
+                static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
+                quat = r1 * r2 * quat;
 
                 lock();
                 state.pos = pos;
-                state.quat = rot * quat;
+                state.quat = quat;
                 unlock();
             }
         }
