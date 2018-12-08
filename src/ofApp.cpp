@@ -2,20 +2,25 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetVerticalSync(true);
-//    ofEnableDepthTest();
-    ofSetFrameRate(60);
+    ofSetVerticalSync(false);
+    ofEnableDepthTest();
+    ofSetFrameRate(90);
     stepper.setStepSize(1. / 2000.);
     ofLog() << "Ticks per frame @ 60fps: " << 1. / 60. / stepper.getStepSize();
 
     // Threaded OSC Receive
     receiver.startThread();
 
-    // Setup the Camera
+    // Setup the 3d scene camera
     cam.disableMouseInput();
     cam.setPosition(110, 110, 665);
     cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
     cam.setFov(63);
+
+    // setup
+    if (videoIn.setup(0)) {
+        videoIn.start(bmdModeHD1080i5994);
+    }
 }
 
 //--------------------------------------------------------------
@@ -48,7 +53,7 @@ void ofApp::update(){
     
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
-    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 500;
+    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 100;
     mouse.worldPos = cam.getGlobalPosition() + ray;
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
@@ -56,13 +61,19 @@ void ofApp::update(){
     // tick our content
     content.update(stepper, mouse);
     
+    // BlackMagic video
+    videoIn.update();
+
     previousMicroseconds = microseconds;
     previousMouse = mouse;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0, 0, 0);
+//    ofBackground(0, 0, 0);
+    ofSetColor(255);
+    ofClear(0);
+    videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
 
     // DEBUG: info about our camera
     ofVec3f cPos = cam.getPosition();
@@ -115,11 +126,6 @@ void ofApp::keyPressed(int key){
         case OF_KEY_SHIFT:
             break;
         case OF_KEY_RIGHT_SHIFT:
-            break;
-        case 'c':
-        case 'C':
-            // todo: once we get position info working, we can be done
-            cam.getMouseInputEnabled() ? cam.disableMouseInput() : cam.enableMouseInput();
             break;
         default:
             if (state == PLAYING) {

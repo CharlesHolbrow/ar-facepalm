@@ -8,6 +8,7 @@
 #include "customJson.h"
 #include "content.h"
 #include "receiver.h"
+#include "ofxDeckLink.h"
 
 enum STATE {
     RECORDING,
@@ -40,6 +41,7 @@ class ofApp : public ofBaseApp{
     uint64_t previousMicroseconds = 0;
     MouseEvent previousMouse;
     ofEasyCam cam;
+    ofxDeckLinkAPI::Input videoIn;
 
     // Handle recording
     STATE state = PLAYING;
