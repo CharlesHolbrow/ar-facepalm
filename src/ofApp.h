@@ -9,6 +9,7 @@
 #include "content.h"
 #include "receiver.h"
 #include "ofxDeckLink.h"
+#include "msgDelay.h"
 
 enum STATE {
     RECORDING,
@@ -49,6 +50,7 @@ class ofApp : public ofBaseApp{
     Content content;
     Stepper stepper;
     Receiver receiver;
+    MsgDelay<CameraOrientation> camDelay;
 
     // These are for debugging camera issues
     vector<ofNode> nodes;

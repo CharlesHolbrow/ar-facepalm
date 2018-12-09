@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "msgDelay.h"
 
 struct CameraOrientation {
     ofVec3f pos = ofVec3f(1, 1, 1);
@@ -22,12 +23,15 @@ public:
     CameraOrientation getState();
     float getFov();
     float getScale();
-    
+    float getDelay();
+
 protected:
+    MsgDelay<CameraOrientation> cameraMessages;
     ofxOscReceiver oscReceiver;
-    CameraOrientation state;
-    float fov = 31.333;
+    CameraOrientation cameraState;
+    float fov = 31.3333;
     float scale = 800;
+    float delay = 0.08;
 };
 
 #endif /* receiver_h */

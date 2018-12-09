@@ -23,12 +23,12 @@ public:
 
     void update(double deltaTime) {
         pos += velocity * deltaTime;
-        size -= 2.f * deltaTime;
+        size -= 0.6 * deltaTime;
         size = (size < 0) ? 0 : size;
     };
 
     ofColor color() {
-        const float scale = ofMap(size, 0, 28, 0.1, 1, true);
+        const float scale = ofMap(size, 0, 12, 0.1, 1, true);
         return BLACK.getLerped(ofc, scale);
     };
 
@@ -65,7 +65,7 @@ public:
         double updateTime = 0;
         for (auto b : playhead.update(deltaTime)) {
             ofSetColor(127. + 127. * sin(b.gestureTime), 255, 255);
-            add(b.pos, 26);
+            add(b.pos, 16);
             updateLast(playhead.playbackTime - b.gestureTime);
         }
     };

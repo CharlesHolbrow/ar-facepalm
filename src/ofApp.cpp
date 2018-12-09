@@ -16,7 +16,7 @@ void ofApp::setup(){
     cam.setPosition(110, 110, 665);
     cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
     cam.setFov(63);
-    //cam.setAspectRatio(<#float aspectRatio#>) by default this uses the screen size
+    //cam.setAspectRatio(float) // By default the screen size is used
 
     // setup
     if (videoIn.setup(0)) {
@@ -38,7 +38,7 @@ void ofApp::update(){
     double frameEnd = static_cast<double>(microseconds * 0.000001);
     // delta time in seconds
     double frameDelta = static_cast<double>(deltaMicroseconds * 0.000001);
-    
+
     // Setup the Stepper for this frame
     stepper.advanceFrame(frameDelta);
     
@@ -54,7 +54,7 @@ void ofApp::update(){
     
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
-    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 600;
+    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 1200;
     mouse.worldPos = cam.getGlobalPosition() + ray;
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
@@ -63,7 +63,7 @@ void ofApp::update(){
     CameraOrientation cor = receiver.getState();
     cam.setOrientation(cor.quat);
     cam.setPosition(cor.pos * receiver.getScale());
-    cam.setFov(receiver.getFov())   ;
+    cam.setFov(receiver.getFov());
 
     // tick our content
     content.update(stepper, mouse);
