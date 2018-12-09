@@ -20,10 +20,14 @@ class Receiver : public ofThread {
 public:
     void threadedFunction();
     CameraOrientation getState();
+    float getFov();
+    float getScale();
     
 protected:
     ofxOscReceiver oscReceiver;
     CameraOrientation state;
+    float fov = 31.333;
+    float scale = 800;
 };
 
 #endif /* receiver_h */

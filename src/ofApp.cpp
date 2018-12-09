@@ -2,8 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetVerticalSync(false);
-    ofEnableDepthTest();
+    ofSetVerticalSync(true);
+//    ofEnableDepthTest();
     ofSetFrameRate(90);
     stepper.setStepSize(1. / 2000.);
     ofLog() << "Ticks per frame @ 60fps: " << 1. / 60. / stepper.getStepSize();
@@ -16,12 +16,15 @@ void ofApp::setup(){
     cam.setPosition(110, 110, 665);
     cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
     cam.setFov(63);
+    //cam.setAspectRatio(<#float aspectRatio#>) by default this uses the screen size
 
     // setup
     if (videoIn.setup(0)) {
-        videoIn.start(bmdModeHD1080i5994);
+//        videoIn.start(bmdModeHD1080i5994); // works
+//        videoIn.start(bmdModeHD1080p30);   // works
+//        videoIn.start(bmdModeHD720p60);    // works
+        videoIn.startAutoDisplayMode();
     }
-    nodes.push_back(ofNode());
 }
 
 //--------------------------------------------------------------
@@ -51,7 +54,7 @@ void ofApp::update(){
     
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
-    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 400;
+    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 600;
     mouse.worldPos = cam.getGlobalPosition() + ray;
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
@@ -59,7 +62,8 @@ void ofApp::update(){
     // Get the position of the Tracker
     CameraOrientation cor = receiver.getState();
     cam.setOrientation(cor.quat);
-    cam.setPosition(cor.pos * 600);
+    cam.setPosition(cor.pos * receiver.getScale());
+    cam.setFov(receiver.getFov())   ;
 
     // tick our content
     content.update(stepper, mouse);
@@ -73,10 +77,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-//    ofBackground(0, 0, 0);
+    ofBackground(0, 0, 0);
     ofSetColor(255);
     ofClear(0);
-//    videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
+    videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
 
     // DEBUG: info about our camera
     ofVec3f cPos = cam.getPosition();
@@ -118,7 +122,7 @@ void ofApp::keyPressed(int key){
         }
         return;
     }
-    
+    ofNode n;
     switch(key){
         case OF_KEY_RETURN:
             content.replayMainGesture();
@@ -129,6 +133,11 @@ void ofApp::keyPressed(int key){
         case OF_KEY_SHIFT:
             break;
         case OF_KEY_RIGHT_SHIFT:
+            break;
+        case ' ':
+            n.setPosition(cam.getGlobalPosition());
+            n.setOrientation(cam.getGlobalOrientation());
+            nodes.push_back(n);
             break;
         default:
             if (state == PLAYING) {

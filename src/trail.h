@@ -10,23 +10,26 @@
 
 #include "gesturePlayhead.h"
 
+const static ofColor WHITE = ofColor(255, 255, 255);
+const static ofColor BLACK = ofColor(0, 0, 0);
+
 class Particle {
 public:
     ofVec3f pos;
     ofVec3f velocity;
     double size;
 
-    ofColor ofc = ofColor::white;
+    ofColor ofc = WHITE;
 
     void update(double deltaTime) {
         pos += velocity * deltaTime;
-        size -= 30.f * deltaTime;
+        size -= 2.f * deltaTime;
         size = (size < 0) ? 0 : size;
     };
 
     ofColor color() {
         const float scale = ofMap(size, 0, 28, 0.1, 1, true);
-        return ofColor::black.getLerped(ofc, scale);
+        return BLACK.getLerped(ofc, scale);
     };
 
     bool isDead() {
@@ -62,7 +65,7 @@ public:
         double updateTime = 0;
         for (auto b : playhead.update(deltaTime)) {
             ofSetColor(127. + 127. * sin(b.gestureTime), 255, 255);
-            add(b.pos, 30);
+            add(b.pos, 26);
             updateLast(playhead.playbackTime - b.gestureTime);
         }
     };

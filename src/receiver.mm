@@ -6,7 +6,8 @@ void Receiver::threadedFunction() {
         while(oscReceiver.hasWaitingMessages()){
             ofxOscMessage m;
             oscReceiver.getNextMessage(m);
-            if (m.getAddress() == "/pos") {
+            auto addr = m.getAddress();
+            if (addr == "/pos") {
                 ofVec3f pos = ofVec3f(m.getArgAsFloat(0),
                                       m.getArgAsFloat(1),
                                       m.getArgAsFloat(2));
@@ -25,6 +26,14 @@ void Receiver::threadedFunction() {
                 state.pos = pos;
                 state.quat = quat;
                 unlock();
+            } else if (addr == "/fov") {
+                lock();
+                fov = m.getArgAsFloat(0);
+                unlock();
+            } else if (addr == "/scale") {
+                lock();
+                scale = m.getArgAsFloat(0);
+                unlock();
             }
         }
         ofSleepMillis(1);
@@ -35,6 +44,22 @@ CameraOrientation Receiver::getState() {
     CameraOrientation result;
     lock();
     result = state;
+    unlock();
+    return result;
+}
+
+float Receiver::getFov() {
+    float result;
+    lock();
+    result = fov;
+    unlock();
+    return result;
+}
+
+float Receiver::getScale() {
+    float result;
+    lock();
+    result = scale;
     unlock();
     return result;
 }
