@@ -29,9 +29,9 @@ protected:
     MsgDelay<CameraOrientation> cameraMessages;
     ofxOscReceiver oscReceiver;
     CameraOrientation cameraState;
-    float fov = 31.3333;
+    float fov = 39;
     float scale = 800;
-    float delay = 0.08;
+    float delay = 0.057;
 };
 
 #endif /* receiver_h */

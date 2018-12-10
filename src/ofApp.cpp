@@ -23,6 +23,7 @@ void ofApp::setup(){
 //        videoIn.start(bmdModeHD1080i5994); // works
 //        videoIn.start(bmdModeHD1080p30);   // works
 //        videoIn.start(bmdModeHD720p60);    // works
+//        videoIn.start(bmdModeHD1080p60);   // unknown
         videoIn.startAutoDisplayMode();
     }
 }
