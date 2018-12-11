@@ -21,29 +21,37 @@ elif len(sys.argv) == 2:
 else:
     print("Invalid number of arguments")
     interval = False
-    
+
 printed = False
 if interval:
     while(True):
         start = time.time()
         txt = ""
+        # Get the tracker values
         try:
-            pose = v.devices["tracker_1"].get_pose_quaternion()
+            tracker_pose = v.devices["tracker_1"].get_pose_quaternion()
         except:
-            print("failed to get vals")
-        if not printed:
-            printed = True
-            print(dir(v.devices["tracker_1"]))
-        for each in pose:
-            txt += "%.4f" % each
-            txt += " "
-        print("\r" + txt, end="")
-
+            print("failed to get tracker pose")
+        for each in tracker_pose:
+            txt += "%.4f " % each
         try:
-            client.send_message("/pos", pose)
+            client.send_message("/pos", tracker_pose) # send
         except socket.error as e:
             print("Socket Error when sending osc:", e)
 
+        # Get the Controllers if they exist:
+        try:
+            controller_pose = v.devices["controller_1"].get_pose_quaternion()
+        except:
+            print("failed to get controller pose")
+        for each in controller_pose:
+            txt += "%.4f " % each
+        if not printed:
+            try:
+                print(dir(v.devices["controller_1"]))
+                printed = True
+
+        print("\r" + txt, end="")
         sleep_time = interval-(time.time()-start)
         if sleep_time>0:
             time.sleep(sleep_time)
