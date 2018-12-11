@@ -52,18 +52,21 @@ void ofApp::update(){
     mouse.pos = ofVec2f(ofGetMouseX(), ofGetMouseY());
     mouse.previousPos = previousMouse.pos;
     mouse.vel = (mouse.pos - previousMouse.pos) / stepper.stepsDuration();
+
+    // Get the position of the Tracker
+    Orientation7 cor = receiver.getCamera();
+    Orientation7 controller = receiver.getController();
     
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
-    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 1200;
-    mouse.worldPos = cam.getGlobalPosition() + ray;
+    ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 900;
+//    mouse.worldPos = cam.getGlobalPosition() + ray;
+    mouse.worldPos = controller.pos;
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
 
-    // Get the position of the Tracker
-    CameraOrientation cor = receiver.getState();
     cam.setOrientation(cor.quat);
-    cam.setPosition(cor.pos * receiver.getScale());
+    cam.setPosition(cor.pos);
     cam.setFov(receiver.getFov());
 
     // tick our content

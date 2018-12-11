@@ -12,7 +12,7 @@
 #include "ofxOsc.h"
 #include "msgDelay.h"
 
-struct CameraOrientation {
+struct Orientation7 {
     ofVec3f pos = ofVec3f(1, 1, 1);
     ofQuaternion quat;
 };
@@ -20,15 +20,17 @@ struct CameraOrientation {
 class Receiver : public ofThread {
 public:
     void threadedFunction();
-    CameraOrientation getState();
+    Orientation7 getCamera();
     float getFov();
     float getScale();
     float getDelay();
+    Orientation7 getController();
 
 protected:
-    MsgDelay<CameraOrientation> cameraMessages;
+    MsgDelay<Orientation7> cameraMessages;
     ofxOscReceiver oscReceiver;
-    CameraOrientation cameraState;
+    Orientation7 cameraState;
+    Orientation7 controllerState;
     float fov = 39;
     float scale = 800;
     float delay = 0.057;

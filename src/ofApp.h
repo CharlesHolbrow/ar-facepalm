@@ -50,7 +50,7 @@ class ofApp : public ofBaseApp{
     Content content;
     Stepper stepper;
     Receiver receiver;
-    MsgDelay<CameraOrientation> camDelay;
+    MsgDelay<Orientation7> camDelay;
 
     // These are for debugging camera issues
     vector<ofNode> nodes;

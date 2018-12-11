@@ -25,13 +25,27 @@ void Receiver::threadedFunction() {
                 static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
                 quat = r1 * r2 * quat;
 
-                CameraOrientation result;
-                result.pos = pos;
+                Orientation7 result;
+                result.pos = pos * scale;
                 result.quat = quat;
 
                 lock();
                 double time = static_cast<double>(ofGetElapsedTimeMicros() * 0.000001);
                 cameraMessages.add(time, result);
+                unlock();
+            } else if (addr == "/controller") {
+                ofVec3f pos = ofVec3f(m.getArgAsFloat(0),
+                                      m.getArgAsFloat(1),
+                                      m.getArgAsFloat(2));
+                float w, x, y, z;
+                w = m.getArgAsFloat(3);
+                x = m.getArgAsFloat(4);
+                y = m.getArgAsFloat(5);
+                z = m.getArgAsFloat(6);
+                ofQuaternion quat = ofQuaternion(x, y, z, w);
+                lock();
+                controllerState.pos = pos * scale;
+                controllerState.quat = quat;
                 unlock();
             } else if (addr == "/fov") {
                 lock();
@@ -51,16 +65,24 @@ void Receiver::threadedFunction() {
     }
 }
 
-CameraOrientation Receiver::getState() {
+Orientation7 Receiver::getCamera() {
     double time = static_cast<double>(ofGetElapsedTimeMicros() * 0.000001);
     lock(); // --- LOCK ---
 
     time -= delay;
     // only update the state if we got a new message;
     if (cameraMessages.hasMessageAt(time)) cameraState = cameraMessages.getMessageAt(time);
-    CameraOrientation result = cameraState;
+    Orientation7 result = cameraState;
 
     unlock(); // --- UNLOCK ---
+    return result;
+}
+
+Orientation7 Receiver::getController() {
+    Orientation7 result;
+    lock();
+    result = controllerState;
+    unlock();
     return result;
 }
 
