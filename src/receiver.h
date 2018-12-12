@@ -32,7 +32,7 @@ protected:
     Orientation7 cameraState;
     Orientation7 controllerState;
     float fov = 39;
-    float scale = 800;
+    float scale = 1000;
     float delay = 0.057;
 };
 

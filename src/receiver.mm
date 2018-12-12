@@ -25,9 +25,15 @@ void Receiver::threadedFunction() {
                 static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
                 quat = r1 * r2 * quat;
 
+                ofNode tracker, camera;
+                tracker.setPosition(pos);
+                tracker.setOrientation(quat);
+                camera.setParent(tracker);
+                camera.setPosition(0, -150, 0);
+
                 Orientation7 result;
-                result.pos = pos;
-                result.quat = quat;
+                result.pos = camera.getGlobalPosition();
+                result.quat = camera.getGlobalOrientation();
 
                 double time = static_cast<double>(ofGetElapsedTimeMicros() * 0.000001);
                 cameraMessages.add(time, result);

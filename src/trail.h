@@ -80,8 +80,8 @@ public:
         Particle p;
         p.size = size;
         p.pos = pos;
-//        p.velocity.x = 100;
-//        p.velocity.y = 80;
+        p.velocity.x = 0;
+        p.velocity.y = 0;
         p.ofc = ofGetStyle().color;
         parts.push_back(p);
     }
