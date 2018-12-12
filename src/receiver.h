@@ -31,8 +31,8 @@ protected:
     ofxOscReceiver oscReceiver;
     Orientation7 cameraState;
     Orientation7 controllerState;
-    float fov = 39;
-    float scale = 1000;
+    float fov = 24.9;
+    float scale = 1000.;
     float delay = 0.057;
 };
 

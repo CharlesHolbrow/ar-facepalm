@@ -15,7 +15,7 @@ void ofApp::setup(){
     cam.disableMouseInput();
     cam.setPosition(110, 110, 665);
     cam.lookAt(ofVec3f(0), ofVec3f(0, 1, 0));
-    cam.setFov(63);
+    cam.setFov(24.9);
     //cam.setAspectRatio(float) // By default the screen size is used
 
     // setup
@@ -67,7 +67,7 @@ void ofApp::update(){
 
     cam.setOrientation(cor.quat);
     cam.setPosition(cor.pos);
-    cam.setFov(receiver.getFov());
+    cam.setFov(receiver.getFov()); // Can also set this in the main view
 
     // tick our content
     content.update(stepper, mouse);
@@ -87,20 +87,20 @@ void ofApp::draw(){
     videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
 
     // DEBUG: info about our camera
-    ofVec3f cPos = cam.getPosition();
-    char str [100];
-    std::sprintf(str, "Camera: %4.0f %4.0f %4.0f\tp:%4.0f y:%4.0f r:%4.0f",
-                 cPos.x, cPos.y, cPos.z,
-                 cam.getPitch(),
-                 cam.getHeading(),
-                 cam.getRoll());
-    ofSetColor(255, 0, 0);
-    ofDrawBitmapString(str, 2, 12);
+//    ofVec3f cPos = cam.getPosition();
+//    char str [100];
+//    std::sprintf(str, "Camera: %4.0f %4.0f %4.0f\tp:%4.0f y:%4.0f r:%4.0f",
+//                 cPos.x, cPos.y, cPos.z,
+//                 cam.getPitch(),
+//                 cam.getHeading(),
+//                 cam.getRoll());
+//    ofSetColor(255, 0, 0);
+//    ofDrawBitmapString(str, 2, 12);
 
     cam.begin();
         content.render();
         // Debug Info
-        ofDrawAxis(100);
+//        ofDrawAxis(100);
         for (ofNode n : nodes) {
             n.draw();
         }

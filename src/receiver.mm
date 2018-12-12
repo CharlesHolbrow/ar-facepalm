@@ -49,8 +49,15 @@ void Receiver::threadedFunction() {
                 y = m.getArgAsFloat(5);
                 z = m.getArgAsFloat(6);
                 ofQuaternion quat = ofQuaternion(x, y, z, w);
-                controllerState.pos = pos;
-                controllerState.quat = quat;
+                ofNode controller, pointer;
+                controller.setPosition(pos);
+                controller.setOrientation(quat);
+                pointer.setParent(controller);
+                pointer.setPosition(0, -70.f, -30.f);
+                
+                
+                controllerState.pos = pointer.getGlobalPosition();
+                controllerState.quat = pointer.getGlobalOrientation();
                 unlock();
             } else if (addr == "/fov") {
                 lock();
