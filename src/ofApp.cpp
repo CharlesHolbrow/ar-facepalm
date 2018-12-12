@@ -60,8 +60,8 @@ void ofApp::update(){
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
     ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 900;
-//    mouse.worldPos = cam.getGlobalPosition() + ray;
-    mouse.worldPos = controller.pos;
+//    mouse.worldPos = cam.getGlobalPosition() + ray; // draw with mouse
+    mouse.worldPos = controller.pos; // draw with controller
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
 

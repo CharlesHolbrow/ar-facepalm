@@ -8,11 +8,11 @@ void Receiver::threadedFunction() {
             oscReceiver.getNextMessage(m);
             auto addr = m.getAddress();
             if (addr == "/pos") {
-
+                lock();
                 // Conver the message to 3d vector and a quaternion
-                ofVec3f pos = ofVec3f(m.getArgAsFloat(0),
-                                      m.getArgAsFloat(1),
-                                      m.getArgAsFloat(2));
+                ofVec3f pos = ofVec3f(m.getArgAsFloat(0) * scale,
+                                      m.getArgAsFloat(1) * scale,
+                                      m.getArgAsFloat(2) * scale);
                 float w, x, y, z;
                 w = m.getArgAsFloat(3);
                 x = m.getArgAsFloat(4);
@@ -26,25 +26,24 @@ void Receiver::threadedFunction() {
                 quat = r1 * r2 * quat;
 
                 Orientation7 result;
-                result.pos = pos * scale;
+                result.pos = pos;
                 result.quat = quat;
 
-                lock();
                 double time = static_cast<double>(ofGetElapsedTimeMicros() * 0.000001);
                 cameraMessages.add(time, result);
                 unlock();
             } else if (addr == "/controller") {
-                ofVec3f pos = ofVec3f(m.getArgAsFloat(0),
-                                      m.getArgAsFloat(1),
-                                      m.getArgAsFloat(2));
+                lock();
+                ofVec3f pos = ofVec3f(m.getArgAsFloat(0) * scale,
+                                      m.getArgAsFloat(1) * scale,
+                                      m.getArgAsFloat(2) * scale);
                 float w, x, y, z;
                 w = m.getArgAsFloat(3);
                 x = m.getArgAsFloat(4);
                 y = m.getArgAsFloat(5);
                 z = m.getArgAsFloat(6);
                 ofQuaternion quat = ofQuaternion(x, y, z, w);
-                lock();
-                controllerState.pos = pos * scale;
+                controllerState.pos = pos;
                 controllerState.quat = quat;
                 unlock();
             } else if (addr == "/fov") {
