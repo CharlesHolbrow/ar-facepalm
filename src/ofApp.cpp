@@ -104,6 +104,13 @@ void ofApp::draw(){
         for (ofNode n : nodes) {
             n.draw();
         }
+        // draw the dam controller
+        ofNode n;
+        Orientation7 controller = receiver.getController();
+        n.setOrientation(controller.quat);
+        n.setPosition(controller.pos);
+        n.setScale((controller.trigger + 1));
+        n.draw();
     cam.end();
 
     if (state == RECORDING) {

@@ -28,7 +28,7 @@ void Receiver::threadedFunction() {
                 // mounted on the flash shoe)
                 //static const ofQuaternion r1 = ofQuaternion(90, ofVec3f(1, 0, 0));
                 //static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
-                //quat = r1 * r2 * quat;
+                //quat = r1 * r2 * quat; // rotate quat by r2 and then by r1  (I think)
 
                 ofNode tracker, camera;
                 tracker.setPosition(pos);
