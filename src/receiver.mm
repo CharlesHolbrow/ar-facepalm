@@ -7,7 +7,7 @@ void Receiver::threadedFunction() {
             ofxOscMessage m;
             oscReceiver.getNextMessage(m);
             auto addr = m.getAddress();
-            if (addr == "/pos") {
+            if (addr == "/tracker") {
                 lock();
                 // Conver the message to 3d vector and a quaternion
                 ofVec3f pos = ofVec3f(m.getArgAsFloat(0) * scale,
@@ -20,7 +20,7 @@ void Receiver::threadedFunction() {
                 z = m.getArgAsFloat(6);
                 ofQuaternion quat = ofQuaternion(x, y, z, w);
 
-                // Adust for the mout angle of the vive tracker on the camera
+                // Adust for the mount angle of the vive tracker on the camera
                 static const ofQuaternion r1 = ofQuaternion(90, ofVec3f(1, 0, 0));
                 static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
                 quat = r1 * r2 * quat;
@@ -54,10 +54,10 @@ void Receiver::threadedFunction() {
                 controller.setOrientation(quat);
                 pointer.setParent(controller);
                 pointer.setPosition(0, -70.f, -30.f);
-                
-                
+
                 controllerState.pos = pointer.getGlobalPosition();
                 controllerState.quat = pointer.getGlobalOrientation();
+                controllerState.trigger = m.getArgAsFloat(7);
                 unlock();
             } else if (addr == "/fov") {
                 lock();

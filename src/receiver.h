@@ -15,6 +15,7 @@
 struct Orientation7 {
     ofVec3f pos = ofVec3f(1, 1, 1);
     ofQuaternion quat;
+    float trigger;
 };
 
 class Receiver : public ofThread {

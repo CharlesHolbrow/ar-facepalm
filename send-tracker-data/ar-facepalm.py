@@ -33,9 +33,9 @@ if interval:
             for each in tracker_pose:
                 txt += "%.4f " % each
             try:
-                client.send_message("/pos", tracker_pose) # send
+                client.send_message("/tracker", tracker_pose) # send
             except socket.error as e:
-                print("Socket Error when sending /pos osc:", e)
+                print("Socket Error when sending /tracker osc:", e)
         except:
             print("failed to get tracker pose")
             txt += "failed to get tracker pose - "
