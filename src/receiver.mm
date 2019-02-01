@@ -22,7 +22,7 @@ void Receiver::threadedFunction() {
 
                 // When I was getting the quaternion from the python script I used these
                 // two quaternions so that the tracker would work positioned on the flash
-                // show of a camera with the tracker led pointing forward.
+                // shoe of a camera with the tracker led pointing forward.
                 // When I switched to using the openvr script to get the quaternion
                 // these messed things up (made the FOV look up twoard the sky when
                 // mounted on the flash shoe)

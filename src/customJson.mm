@@ -6,7 +6,7 @@
 //
 
 //#import <Foundation/Foundation.h>
-#import "customJson.h"
+#include "customJson.h"
 
 using nlohmann::json;
 // Blip json
