@@ -23,7 +23,7 @@ private:
 public:
     // when adding, timeReceived must be >= the previous add
     void add(double timeReceived, T msg) {
-        if (storage.size() > 0 && storage.back().timeReceived >= timeReceived) {
+        if (storage.size() > 0 && storage.back().timeReceived > timeReceived) {
             return; // fail silently
         }
         MessageWithTime<T> mwt;
