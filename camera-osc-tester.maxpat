@@ -4,12 +4,12 @@
 		"appversion" : 		{
 			"major" : 7,
 			"minor" : 3,
-			"revision" : 5,
-			"architecture" : "x64",
+			"revision" : 6,
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 90.0, 312.0, 1033.0, 534.0 ],
+		"rect" : [ 116.0, 438.0, 889.0, 579.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -86,8 +86,8 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 3,
-							"revision" : 5,
-							"architecture" : "x64",
+							"revision" : 6,
+							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
@@ -741,12 +741,12 @@
 				"box" : 				{
 					"id" : "obj-41",
 					"maxclass" : "newobj",
-					"numinlets" : 8,
+					"numinlets" : 9,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 20.799995, 391.200012, 143.0, 22.0 ],
+					"patching_rect" : [ 20.799995, 391.200012, 156.0, 22.0 ],
 					"style" : "",
-					"text" : "pack 0. 0. 0. 0. 0. 0. 0. 0."
+					"text" : "pack 0. 0. 0. 0. 0. 0. 0. 0. 0."
 				}
 
 			}
@@ -759,7 +759,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 176.600006, 486.0, 281.200012, 22.0 ],
 					"style" : "",
-					"text" : "/pos 0.29 0. 0. 0. 0. 0. 0. 0."
+					"text" : "/tracker -0.65 -2. -4.2 -0.12 -0.7 -1.5 0.05 0. 0."
 				}
 
 			}
@@ -770,9 +770,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 20.799995, 426.0, 81.0, 22.0 ],
+					"patching_rect" : [ 20.799995, 426.0, 98.0, 22.0 ],
 					"style" : "",
-					"text" : "prepend /pos"
+					"text" : "prepend /tracker"
 				}
 
 			}
@@ -867,7 +867,7 @@
 					"numinlets" : 8,
 					"numoutlets" : 8,
 					"outlettype" : [ "", "", "", "", "", "", "", "" ],
-					"patching_rect" : [ 20.799995, 352.599976, 92.5, 22.0 ],
+					"patching_rect" : [ 20.799995, 352.599976, 138.875, 22.0 ],
 					"style" : "",
 					"text" : "bondo 8"
 				}
@@ -1040,9 +1040,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 20.799995, 6.799995, 99.0, 22.0 ],
+					"patching_rect" : [ 20.799995, 6.799995, 106.0, 22.0 ],
 					"style" : "",
-					"text" : "udpreceive 6969"
+					"text" : "udpreceive 69691"
 				}
 
 			}
