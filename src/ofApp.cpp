@@ -42,6 +42,10 @@ void ofApp::update(){
 
     // Setup the Stepper for this frame
     stepper.advanceFrame(frameDelta);
+
+    // Get the position of the Tracker
+    Orientation7 cor = receiver.getCamera();
+    Orientation7 controller = receiver.getController();
     
     // Process all input
     bool down = ofGetMousePressed();
@@ -52,16 +56,12 @@ void ofApp::update(){
     mouse.pos = ofVec2f(ofGetMouseX(), ofGetMouseY());
     mouse.previousPos = previousMouse.pos;
     mouse.vel = (mouse.pos - previousMouse.pos) / stepper.stepsDuration();
-
-    // Get the position of the Tracker
-    Orientation7 cor = receiver.getCamera();
-    Orientation7 controller = receiver.getController();
     
     // calculate the world position of the mouse
     ofVec3f world = cam.screenToWorld(ofVec3f(mouse.pos.x, mouse.pos.y, 0));
     ofVec3f ray = (world - cam.getGlobalPosition()).normalize() * 900;
-//    mouse.worldPos = cam.getGlobalPosition() + ray; // draw with mouse
-    mouse.worldPos = controller.pos; // draw with controller
+    mouse.worldPos = cam.getGlobalPosition() + ray; // draw with mouse
+//    mouse.worldPos = controller.pos; // draw with controller
     mouse.previousWorldPos = previousMouse.worldPos;
     mouse.worldVel = (mouse.worldPos - mouse.previousWorldPos) / stepper.stepsDuration();
 
@@ -84,23 +84,23 @@ void ofApp::draw(){
     ofBackground(0, 0, 0);
     ofSetColor(255);
     ofClear(0);
-    videoIn.draw(0, 0, ofGetWidth(), ofGetHeight());
+    //videoIn.draw(0, 0, ofGetWidth(), ofGetHeight()); // Draw video from BlackMagic capture
 
     // DEBUG: info about our camera
-//    ofVec3f cPos = cam.getPosition();
-//    char str [100];
-//    std::sprintf(str, "Camera: %4.0f %4.0f %4.0f\tp:%4.0f y:%4.0f r:%4.0f",
-//                 cPos.x, cPos.y, cPos.z,
-//                 cam.getPitch(),
-//                 cam.getHeading(),
-//                 cam.getRoll());
-//    ofSetColor(255, 0, 0);
-//    ofDrawBitmapString(str, 2, 12);
+    ofVec3f cPos = cam.getPosition();
+    char str [100];
+    std::sprintf(str, "Camera: %4.0f %4.0f %4.0f\tp:%4.0f y:%4.0f r:%4.0f",
+                 cPos.x, cPos.y, cPos.z,
+                 cam.getPitch(),
+                 cam.getHeading(),
+                 cam.getRoll());
+    ofSetColor(255, 0, 0);
+    ofDrawBitmapString(str, 2, 12);
 
     cam.begin();
         content.render();
         // Debug Info
-//        ofDrawAxis(100);
+        ofDrawAxis(100);
         for (ofNode n : nodes) {
             n.draw();
         }

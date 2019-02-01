@@ -20,10 +20,15 @@ void Receiver::threadedFunction() {
                 z = m.getArgAsFloat(6);
                 ofQuaternion quat = ofQuaternion(x, y, z, w);
 
-                // Adust for the mount angle of the vive tracker on the camera
-                static const ofQuaternion r1 = ofQuaternion(90, ofVec3f(1, 0, 0));
-                static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
-                quat = r1 * r2 * quat;
+                // When I was getting the quaternion from the python script I used these
+                // two quaternions so that the tracker would work positioned on the flash
+                // show of a camera with the tracker led pointing forward.
+                // When I switched to using the openvr script to get the quaternion
+                // these messed things up (made the FOV look up twoard the sky when
+                // mounted on the flash shoe)
+                //static const ofQuaternion r1 = ofQuaternion(90, ofVec3f(1, 0, 0));
+                //static const ofQuaternion r2 = ofQuaternion(180, ofVec3f(0, 1, 0));
+                //quat = r1 * r2 * quat;
 
                 ofNode tracker, camera;
                 tracker.setPosition(pos);
